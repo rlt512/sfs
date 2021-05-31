@@ -1,0 +1,101 @@
+{% extends "layouts/base.njk" %}
+
+{% set previousReactions = pastReactions %}
+
+{% set filmData = films %}
+{% set films = filmData.films %}
+
+    {% block main %}
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                {{ content | safe }}
+
+                <table class="table table-bordered reactions-table">
+                    <thead>
+                        <tr>
+                            <th>Film</th>
+                            <th>Attendance</th>
+                            <th>Reactions Returned</th>
+                            <th>5 Star</th>
+                            <th>4 Star</th>
+                            <th>3 Star</th>
+                            <th>2 Star</th>
+                            <th>1 Star</th>
+                            <th>%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for film in  films %}
+                        <tr>
+                            <td>{{ film.title }}</td>
+                            <td>{% if film.attendance %}{{ film.attendance }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.returns }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.excellent }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.good }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.average }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.disappointing }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.awful }}{% endif %}</td>
+                            <td>{% if film.attendance %}{{ film.ratingsAverage }}%{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    {% set feedbackTotals = filmData.ratingsTotal %}
+                        <tr>
+                            <td>Average</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.attendance }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.returns }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.excellent }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.good }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.average }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.disappointing }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.awful }}{% endif %}</td>
+                            <td>{% if feedbackTotals.attendance %}{{ feedbackTotals.ratingsAverage }}%{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2>Audience Feedback To Films In Previous Seasons</h2>
+                
+                {%- for reaction in previousReactions.reactions %}
+                    <h3>{{ reaction.title }}</h3>
+                    <table class="table table-bordered reactions-table">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">Film</th>
+                                <th class="col-md-1">Attendance</th>
+                                <th class="col-md-2">Reactions Returned</th>
+                                <th class="col-md-1">5 stars</th>
+                                <th class="col-md-1">4 stars</th>
+                                <th class="col-md-1">3 stars</th>
+                                <th class="col-md-1">2 stars</th>
+                                <th class="col-md-1">1 star</th>
+                                <th class="col-md-1">%</th>
+                            </tr>
+                        </thead>
+                        </tbody>
+                        {%- for film in reaction.films %}
+                            <tr>
+                                <td>{{ film.title }}</td>
+                                <td>{{ film.attendance }}</td>
+                                <td>{{ film.reactionsReturned }}</td>
+                                <td>{{ film.fiveStars }}</td>
+                                <td>{{ film.fourStars }}</td>
+                                <td>{{ film.threeStars }}</td>
+                                <td>{{ film.twoStars }}</td>
+                                <td>{{ film.oneStars }}</td>
+                                <td>{% if film.percentageTotal %}{{ film.percentageTotal }}%{% endif %}</td>
+                            </tr>
+                        {%- endfor %}
+                        </tbody>
+                    </table>
+                {%- endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endblock %}

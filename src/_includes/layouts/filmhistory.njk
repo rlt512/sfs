@@ -1,0 +1,49 @@
+{% extends "layouts/base.njk" %}
+
+{% set filmHistory = filmhistory %}
+
+    {% block main %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-md-push-9">
+                
+                {% include "partials/sidebar.html" %}
+                
+            </div>
+
+            <div class="col-md-9 col-md-pull-3">
+
+                {{ content | safe }}
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Season/Date Shown</th>
+                                <th>Film Title</th>
+                                <th>Director</th>
+                                <th>Released</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for film in filmHistory.films %}
+                                <tr>
+                                    <td>{{ film.Dateshown }}</td>
+                                    <td>{{ film.Title }}</td>
+                                    <td>{{ film.Director }}</td>
+                                    <td>{{ film.Year }}</td>
+                                    <td>{{ film.Country }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+    {% endblock %}
